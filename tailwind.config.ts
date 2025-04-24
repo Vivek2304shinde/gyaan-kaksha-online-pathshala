@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,29 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Gyaan Kaksha custom colors
+				saffron: {
+					light: '#FDE1D3',
+					DEFAULT: '#F97316',
+					dark: '#C2590F'
+				},
+				purple: {
+					light: '#E5DEFF',
+					DEFAULT: '#9B87F5',
+					dark: '#6E59A5'
+				},
+				guru: {
+					light: '#F2FCE2',
+					DEFAULT: '#4F772D',
+					dark: '#31572C'
+				},
+				neutral: {
+					lightest: '#F8F8F8',
+					light: '#F1F1F1',
+					DEFAULT: '#8E9196',
+					dark: '#555555',
+					darkest: '#333333'
 				}
 			},
 			borderRadius: {
@@ -84,11 +108,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				fadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				slideIn: {
+					'0%': { transform: 'translateY(20px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fadeIn 0.5s ease-in-out forwards',
+				'slide-in': 'slideIn 0.5s ease-in-out forwards'
 			}
 		}
 	},
