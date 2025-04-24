@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -21,24 +20,45 @@ const TeacherDashboard = () => {
   const [allAssignments, setAllAssignments] = useState([]);
   const [allMeetings, setAllMeetings] = useState([]);
 
+  const startNewMeeting = async () => {
+    const newMeeting = {
+      id: `meeting-${Date.now()}`,
+      title: "Live Class",
+      date: new Date().toISOString().split('T')[0],
+      time: new Date().toLocaleTimeString('en-US', { hour12: false }).slice(0, 5),
+      duration: 60,
+      isActive: true,
+      classroomId: classrooms[0]?.id
+    };
+
+    const updatedClassrooms = classrooms.map(classroom => {
+      if (classroom.id === newMeeting.classroomId) {
+        return {
+          ...classroom,
+          scheduledMeetings: [...classroom.scheduledMeetings, newMeeting]
+        };
+      }
+      return classroom;
+    });
+
+    setClassrooms(updatedClassrooms);
+    navigate(`/meeting/${newMeeting.id}`);
+  };
+
   useEffect(() => {
-    // Get teacher's classrooms
     const teacherClassrooms = getClassroomsForUser();
     setClassrooms(teacherClassrooms);
     
-    // Get all announcements from all classrooms
     const announcements = teacherClassrooms.flatMap(c => 
       c.announcements.map(a => ({ ...a, classroomName: c.name }))
     );
     setAllAnnouncements(announcements);
     
-    // Get all assignments from all classrooms
     const assignments = teacherClassrooms.flatMap(c => 
       c.assignments.map(a => ({ ...a, classroomName: c.name }))
     );
     setAllAssignments(assignments);
     
-    // Get all scheduled meetings from all classrooms
     const meetings = teacherClassrooms.flatMap(c => 
       c.scheduledMeetings.map(m => ({ ...m, classroomName: c.name }))
     );
@@ -53,12 +73,18 @@ const TeacherDashboard = () => {
             <h1 className="text-3xl font-bold">Teacher Dashboard</h1>
             <p className="text-neutral-dark">Welcome back, {user?.name || 'Teacher'}</p>
           </div>
-          <div className="mt-4 md:mt-0">
+          <div className="mt-4 md:mt-0 flex gap-2">
             <Button 
               onClick={() => navigate('/teacher/create')}
               className="gyaan-btn-primary"
             >
               Create New Classroom
+            </Button>
+            <Button 
+              onClick={startNewMeeting}
+              className="bg-purple hover:bg-purple-dark text-white"
+            >
+              Host New Meeting
             </Button>
           </div>
         </div>
