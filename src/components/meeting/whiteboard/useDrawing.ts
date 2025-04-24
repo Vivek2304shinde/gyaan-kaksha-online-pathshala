@@ -1,6 +1,6 @@
 
 import { useCallback } from 'react';
-import { Point, WhiteboardTool } from './types';
+import { Point, WhiteboardTool, BackgroundType } from './types';
 
 interface UseDrawingProps {
   ctx: CanvasRenderingContext2D | null;
@@ -74,8 +74,8 @@ export const useDrawing = ({
     lastPoint: Point,
     currentShape: any | null,
     setLastPoint: (point: Point) => void,
-    applyBackground: (type: string) => void,
-    background: string
+    applyBackground: (type: BackgroundType) => void,
+    background: BackgroundType
   ) => {
     if (!ctx || !isDrawing || !isTeacher) return;
     
@@ -126,7 +126,7 @@ export const useDrawing = ({
     setCurrentShape(null);
   }, [ctx, isTeacher]);
 
-  const clearCanvas = useCallback((applyBackground: (type: string) => void, background: string) => {
+  const clearCanvas = useCallback((applyBackground: (type: BackgroundType) => void, background: BackgroundType) => {
     if (!ctx || !isTeacher || !ctx.canvas) return;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     applyBackground(background);

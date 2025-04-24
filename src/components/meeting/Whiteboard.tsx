@@ -1,15 +1,15 @@
 
 import { useState } from 'react';
-import { WhiteboardProps } from './whiteboard/types';
+import { WhiteboardProps, WhiteboardTool, BackgroundType } from './whiteboard/types';
 import { useCanvas } from './whiteboard/useCanvas';
 import { useDrawing } from './whiteboard/useDrawing';
 import WhiteboardToolbar from './whiteboard/WhiteboardToolbar';
 
 const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher }) => {
-  const [tool, setTool] = useState('pencil');
+  const [tool, setTool] = useState<WhiteboardTool>('pencil');
   const [color, setColor] = useState('#000000');
   const [lineWidth, setLineWidth] = useState(2);
-  const [background, setBackground] = useState('blank');
+  const [background, setBackground] = useState<BackgroundType>('blank');
   const [currentShape, setCurrentShape] = useState<any>(null);
 
   const {
